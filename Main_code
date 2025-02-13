@@ -1,0 +1,343 @@
+import React, { useState } from 'react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, PieChart, Pie, Cell, AreaChart, Area } from 'recharts';
+import { Users, User, BarChart3, Share2, Building2, Star, TrendingUp, Award, Gift, Globe, Target, DollarSign, Zap, Camera, Video, MessageCircle, Play } from 'lucide-react';
+
+const InfluencerDashboard = () => {
+  // Enhanced color palette
+  const COLORS = {
+    primary: '#6366f1',
+    secondary: '#8b5cf6',
+    success: '#10b981',
+    warning: '#f59e0b',
+    error: '#ef4444',
+    info: '#3b82f6',
+    chart: ['#6366f1', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444', '#3b82f6']
+  };
+
+  // Campaign Data
+  const campaignMetrics = [
+    { month: 'Jan', ROI: 2.4, spend: 50000, conversions: 1200 },
+    { month: 'Feb', ROI: 2.8, spend: 65000, conversions: 1800 },
+    { month: 'Mar', ROI: 3.1, spend: 75000, conversions: 2200 },
+    { month: 'Apr', ROI: 2.9, spend: 70000, conversions: 2000 },
+    { month: 'May', ROI: 3.4, spend: 85000, conversions: 2600 },
+    { month: 'Jun', ROI: 3.6, spend: 90000, conversions: 2800 }
+  ];
+
+  // Platform Data
+  const platformData = [
+    { platform: 'Instagram', users: 2500000, posts: 15000, engagement: 4.5 },
+    { platform: 'TikTok', users: 1800000, posts: 12000, engagement: 6.2 },
+    { platform: 'YouTube', users: 1200000, posts: 5000, engagement: 3.8 },
+    { platform: 'Twitter', users: 900000, posts: 8000, engagement: 2.9 }
+  ];
+
+  // Brand Data
+  const brandPerformance = [
+    { brand: 'Nike', revenue: 1200000, campaigns: 12, ROI: 3.2 },
+    { brand: 'Adidas', revenue: 980000, campaigns: 10, ROI: 2.8 },
+    { brand: 'Puma', revenue: 750000, campaigns: 8, ROI: 2.5 },
+    { brand: 'Under Armour', revenue: 620000, campaigns: 6, ROI: 2.2 }
+  ];
+
+  // Agency Data
+  const agencyMetrics = [
+    { month: 'Jan', revenue: 250000, clients: 45, campaigns: 28 },
+    { month: 'Feb', revenue: 280000, clients: 48, campaigns: 32 },
+    { month: 'Mar', revenue: 320000, clients: 52, campaigns: 35 },
+    { month: 'Apr', revenue: 300000, clients: 50, campaigns: 33 },
+    { month: 'May', revenue: 350000, clients: 55, campaigns: 38 },
+    { month: 'Jun', revenue: 380000, clients: 58, campaigns: 42 }
+  ];
+
+  // Engagement data
+  const engagementData = [
+    { month: 'Jan', likes: 4000, comments: 2400, shares: 1800 },
+    { month: 'Feb', likes: 3000, comments: 1398, shares: 2200 },
+    { month: 'Mar', likes: 2000, comments: 9800, shares: 2800 },
+    { month: 'Apr', likes: 2780, comments: 3908, shares: 3300 },
+    { month: 'May', likes: 4890, comments: 4800, shares: 2400 },
+    { month: 'Jun', likes: 3390, comments: 3800, shares: 2900 },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-8">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold">Influencer Analysis Dashboard</h1>
+          <div className="flex gap-4">
+            <Card className="p-4">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="text-green-500" />
+                <span className="font-semibold">Live Updates</span>
+              </div>
+            </Card>
+          </div>
+        </div>
+        
+        <Tabs defaultValue="overview" className="space-y-4">
+          <TabsList className="grid grid-cols-6 gap-4 bg-transparent">
+            {['overview', 'influencers', 'campaigns', 'platforms', 'brands', 'agencies'].map((tab) => (
+              <TabsTrigger
+                key={tab}
+                value={tab}
+                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
+          <TabsContent value="overview" className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="h-4 w-4" />
+                    Total Influencers
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-2xl font-bold">1,234</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Share2 className="h-4 w-4" />
+                    Active Campaigns
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-2xl font-bold">45</p>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Star className="h-4 w-4" />
+                    Partner Brands
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-2xl font-bold">89</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Engagement Overview</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <LineChart width={500} height={300} data={engagementData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="likes" stroke={COLORS.primary} />
+                    <Line type="monotone" dataKey="comments" stroke={COLORS.success} />
+                    <Line type="monotone" dataKey="shares" stroke={COLORS.warning} />
+                  </LineChart>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Platform Distribution</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <PieChart width={400} height={300}>
+                    <Pie
+                      data={platformData}
+                      cx={200}
+                      cy={150}
+                      innerRadius={60}
+                      outerRadius={80}
+                      dataKey="users"
+                    >
+                      {platformData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS.chart[index]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                  </PieChart>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="influencers" className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map((i) => (
+                <Card key={i}>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      Top Influencer {i}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <p className="text-xl font-bold">@influencer{i}</p>
+                      <p className="text-sm text-gray-500">2.5M Followers</p>
+                      <div className="h-2 bg-gray-200 rounded-full mt-2">
+                        <div 
+                          className="h-full rounded-full"
+                          style={{ 
+                            width: `${85 - (i * 10)}%`,
+                            backgroundColor: COLORS.chart[i-1]
+                          }}
+                        />
+                      </div>
+                      <p className="text-sm text-gray-500">Engagement Rate: {7 - i}%</p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="campaigns" className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Target className="h-5 w-5 text-indigo-500" />
+                    Campaign Overview
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span>Active Campaigns</span>
+                      <span className="text-xl font-bold text-indigo-600">24</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Total Spend</span>
+                      <span className="text-xl font-bold text-green-600">$435K</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span>Avg ROI</span>
+                      <span className="text-xl font-bold text-blue-600">3.2x</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="col-span-2">
+                <CardHeader>
+                  <CardTitle>Campaign Performance Trends</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <AreaChart width={600} height={300} data={campaignMetrics}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Area type="monotone" dataKey="ROI" stroke={COLORS.primary} fill={COLORS.primary} fillOpacity={0.2} />
+                    <Area type="monotone" dataKey="conversions" stroke={COLORS.success} fill={COLORS.success} fillOpacity={0.2} />
+                  </AreaChart>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="platforms" className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {platformData.map((platform, index) => (
+                <Card key={platform.platform}>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      {platform.platform === 'Instagram' && <Camera className="h-5 w-5 text-pink-500" />}
+                      {platform.platform === 'TikTok' && <Video className="h-5 w-5 text-purple-500" />}
+                      {platform.platform === 'YouTube' && <Play className="h-5 w-5 text-red-500" />}
+                      {platform.platform === 'Twitter' && <MessageCircle className="h-5 w-5 text-blue-500" />}
+                      {platform.platform}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <div className="text-2xl font-bold">{(platform.users / 1000000).toFixed(1)}M</div>
+                      <div className="text-sm text-gray-500">Users</div>
+                      <div className="mt-4">
+                        <div className="flex justify-between text-sm">
+                          <span>Engagement Rate</span>
+                          <span className="font-medium">{platform.engagement}%</span>
+                        </div>
+                        <div className="h-2 bg-gray-200 rounded-full mt-2">
+                          <div 
+                            className="h-full rounded-full"
+                            style={{ 
+                              width: `${(platform.engagement / 8) * 100}%`,
+                              backgroundColor: COLORS.chart[index]
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Platform Performance Comparison</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <BarChart width={800} height={300} data={platformData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="platform" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="posts" fill={COLORS.primary} name="Total Posts" />
+                  <Bar dataKey="engagement" fill={COLORS.success} name="Engagement Rate" />
+                </BarChart>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="brands" className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Brand Revenue Distribution</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <PieChart width={400} height={400}>
+                    <Pie
+                      data={brandPerformance}
+                      cx={200}
+                      cy={200}
+                      innerRadius={60}
+                      outerRadius={80}
+                      dataKey="revenue"
+                    >
+                      {brandPerformance.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS.chart[index]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                  </PieChart>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+    </div>
+  );
+};
+
+export default InfluencerDashboard;
